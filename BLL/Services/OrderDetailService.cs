@@ -9,5 +9,14 @@ namespace BLL.Services
 {
     public class OrderDetailService:GenericService<OrderDetail>
     {
+        private static OrderDetailService _instance;
+        public  static OrderDetailService getInstance()
+        {
+            if (_instance==null)
+            {
+                _instance = new OrderDetailService();
+            }
+            return _instance;
+        }
     }
 }

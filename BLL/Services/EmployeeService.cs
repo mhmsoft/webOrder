@@ -9,5 +9,14 @@ namespace BLL.Services
 {
     public class EmployeeService:GenericService<Employer>
     {
+        private static EmployeeService _instance;
+        public static EmployeeService getInstance()
+        {
+            if (_instance==null)
+            {
+                _instance = new EmployeeService();
+            }
+            return _instance;
+        }
     }
 }

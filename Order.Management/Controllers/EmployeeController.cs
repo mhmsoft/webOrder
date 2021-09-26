@@ -8,104 +8,96 @@ using System.Web.Mvc;
 
 namespace Order.Management.Controllers
 {
-    public class CustomerController : Controller
+    public class EmployeeController : Controller
     {
-        // GET: Customer
-        // tüm müşterileri göster
+        // GET: Employee
         public ActionResult Index()
         {
-            return View(CustomerService.getInstance().GetAll());
+            return View(EmployeeService.getInstance().GetAll()) ;
         }
-
-        //http://servername:serverportu/controlerName/ActionName
-        //htpp://localhost:13410/Customer/Create
         public ActionResult Create()
         {
+            ViewBag.Departments = new SelectList(DepartmentService.getInstance().GetAll(), "departmentId", "departmentName");
             return View();
-        }
-        [HttpPost] //post methodu ile gönderilen requesti yakalama
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Customer model)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    CustomerService.getInstance().Add(model);
-                    return RedirectToAction("/");
-                }
-                else
-                {
-                    ViewBag.Error = "Model yükleme Hatası";
-                    return View();
-                }
-                   
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Error = "Model yükleme Hatası "+ex.Message;
-                return View();
-            }
-            
-        }
-
-        public ActionResult Edit(int Id)
-        {
-            Customer customer = CustomerService.getInstance().Get(Id);
-            return View(customer);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Customer model)
+        public ActionResult Create(Employer model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    CustomerService.getInstance().Update(model);
+                    EmployeeService.getInstance().Add(model);
                     return RedirectToAction("/");
                 }
                 else
                 {
-                    ViewBag.Error = "Model yükleme Hatası";
+                    ViewBag.Error = "Model Yükleme Hatası";
                     return View();
                 }
-
             }
             catch (Exception ex)
             {
-                ViewBag.Error = "Model yükleme Hatası " + ex.Message;
+                ViewBag.Error = ex.Message;
                 return View();
             }
-
         }
-        public ActionResult Delete (int Id)
+        public ActionResult Edit(int Id)
         {
-            Customer customer = CustomerService.getInstance().Get(Id);
-            return View(customer);
+            ViewBag.Departments = new SelectList(DepartmentService.getInstance().GetAll(), "departmentId", "departmentName", EmployeeService.getInstance().Get(Id).departmentId);
+
+            return View(EmployeeService.getInstance().Get(Id));
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Employer model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    EmployeeService.getInstance().Update(model);
+                    return RedirectToAction("/");
+                }
+                else
+                {
+                    ViewBag.Error = "Model Yükleme Hatası";
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
+        public ActionResult Delete(int Id)
+        {
+            return View(EmployeeService.getInstance().Get(Id));
         }
 
         [HttpPost,ActionName("Delete")]
-        public ActionResult DeleteCustomer(int Id)
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteEmployee(int Id)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    CustomerService.getInstance().Delete(Id);
+                    EmployeeService.getInstance().Delete(Id);
                     return RedirectToAction("/");
                 }
                 else
                 {
-                    ViewBag.Error = "Model yükleme Hatası";
+                    ViewBag.Error = "Model Yükleme Hatası";
                     return View();
                 }
-
             }
             catch (Exception ex)
             {
-                ViewBag.Error = "Model yükleme Hatası " + ex.Message;
+                ViewBag.Error = ex.Message;
                 return View();
             }
         }

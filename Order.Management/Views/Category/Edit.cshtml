@@ -1,0 +1,49 @@
+﻿@model Dal.Context.Category
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4 style="color:#FC8213;">Kategori Düzenle</h4>
+            <hr />
+            @Html.HiddenFor(model=>model.categoryId)
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.categoryName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.categoryName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.categoryName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Düzenle" class="btn btn-warning" />
+                    @Html.ActionLink("Anasayfa", "Index", null, new { @class = "btn", @style = "background-color:#FC8213;color:white" })
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @if (ViewBag.Error != null)
+                    {
+                        <p class="alert">@ViewBag.Error</p>
+                    }
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+
+
+
+

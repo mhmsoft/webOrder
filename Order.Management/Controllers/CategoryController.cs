@@ -8,107 +8,94 @@ using System.Web.Mvc;
 
 namespace Order.Management.Controllers
 {
-    public class CustomerController : Controller
+    public class CategoryController : Controller
     {
-        // GET: Customer
-        // tüm müşterileri göster
+        // GET: Category
         public ActionResult Index()
         {
-            return View(CustomerService.getInstance().GetAll());
+            return View(CategoryService.getInstance().GetAll());
         }
-
-        //http://servername:serverportu/controlerName/ActionName
-        //htpp://localhost:13410/Customer/Create
         public ActionResult Create()
         {
             return View();
         }
-        [HttpPost] //post methodu ile gönderilen requesti yakalama
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Customer model)
+        public ActionResult Create(Category entity)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    CustomerService.getInstance().Add(model);
+                    CategoryService.getInstance().Add(entity);
                     return RedirectToAction("/");
                 }
                 else
                 {
-                    ViewBag.Error = "Model yükleme Hatası";
+                    ViewBag.Error = "Model Yükleme Hatası";
                     return View();
                 }
-                   
             }
             catch (Exception ex)
             {
-                ViewBag.Error = "Model yükleme Hatası "+ex.Message;
+                ViewBag.Error = ex.Message;
                 return View();
             }
-            
         }
-
         public ActionResult Edit(int Id)
         {
-            Customer customer = CustomerService.getInstance().Get(Id);
-            return View(customer);
+            return View(CategoryService.getInstance().Get(Id));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Customer model)
+        public ActionResult Edit(Category model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    CustomerService.getInstance().Update(model);
+                    CategoryService.getInstance().Update(model);
                     return RedirectToAction("/");
                 }
                 else
                 {
-                    ViewBag.Error = "Model yükleme Hatası";
+                    ViewBag.Error = "Model Yükleme Hatası";
                     return View();
                 }
-
             }
             catch (Exception ex)
             {
-                ViewBag.Error = "Model yükleme Hatası " + ex.Message;
+                ViewBag.Error = ex.Message;
                 return View();
             }
-
         }
-        public ActionResult Delete (int Id)
+        public ActionResult Delete(int Id)
         {
-            Customer customer = CustomerService.getInstance().Get(Id);
-            return View(customer);
+            return View(CategoryService.getInstance().Get(Id));
         }
-
+        
         [HttpPost,ActionName("Delete")]
-        public ActionResult DeleteCustomer(int Id)
+        public ActionResult DeleteCategory(int Id)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    CustomerService.getInstance().Delete(Id);
+                    CategoryService.getInstance().Delete(Id);
                     return RedirectToAction("/");
                 }
                 else
                 {
-                    ViewBag.Error = "Model yükleme Hatası";
+                    ViewBag.Error = "Model Yükleme Hatası";
                     return View();
                 }
-
             }
             catch (Exception ex)
             {
-                ViewBag.Error = "Model yükleme Hatası " + ex.Message;
+                ViewBag.Error = ex.Message;
                 return View();
             }
         }
-
     }
 }

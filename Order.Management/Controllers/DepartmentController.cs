@@ -8,107 +8,95 @@ using System.Web.Mvc;
 
 namespace Order.Management.Controllers
 {
-    public class CustomerController : Controller
+    public class DepartmentController : Controller
     {
-        // GET: Customer
-        // tüm müşterileri göster
+        // GET: Department
         public ActionResult Index()
         {
-            return View(CustomerService.getInstance().GetAll());
+            return View(DepartmentService.getInstance().GetAll());
         }
-
-        //http://servername:serverportu/controlerName/ActionName
-        //htpp://localhost:13410/Customer/Create
+        // formu göstermek
         public ActionResult Create()
         {
             return View();
         }
-        [HttpPost] //post methodu ile gönderilen requesti yakalama
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Customer model)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    CustomerService.getInstance().Add(model);
-                    return RedirectToAction("/");
-                }
-                else
-                {
-                    ViewBag.Error = "Model yükleme Hatası";
-                    return View();
-                }
-                   
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Error = "Model yükleme Hatası "+ex.Message;
-                return View();
-            }
-            
-        }
-
-        public ActionResult Edit(int Id)
-        {
-            Customer customer = CustomerService.getInstance().Get(Id);
-            return View(customer);
-        }
-
+        // Kaydetme işini yapan action
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Customer model)
+        public ActionResult Create(Department entity)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    CustomerService.getInstance().Update(model);
+                    DepartmentService.getInstance().Add(entity);
                     return RedirectToAction("/");
                 }
                 else
                 {
-                    ViewBag.Error = "Model yükleme Hatası";
+                    ViewBag.Error = "Model yükleme hatası!";
                     return View();
                 }
-
             }
             catch (Exception ex)
             {
-                ViewBag.Error = "Model yükleme Hatası " + ex.Message;
+                ViewBag.Error = ex.Message;
                 return View();
             }
-
         }
-        public ActionResult Delete (int Id)
+        public ActionResult Edit(int Id)
         {
-            Customer customer = CustomerService.getInstance().Get(Id);
-            return View(customer);
+            return View(DepartmentService.getInstance().Get(Id));
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Department model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    DepartmentService.getInstance().Update(model);
+                    return RedirectToAction("/");
+                }
+                else
+                {
+                    ViewBag.Error = "Model yükleme hatası!";
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
+        public ActionResult Delete(int Id)
+        {
+            return View(DepartmentService.getInstance().Get(Id));
         }
 
         [HttpPost,ActionName("Delete")]
-        public ActionResult DeleteCustomer(int Id)
+        public ActionResult DeleteDepartment(int Id)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    CustomerService.getInstance().Delete(Id);
+                    DepartmentService.getInstance().Delete(Id);
                     return RedirectToAction("/");
                 }
                 else
                 {
-                    ViewBag.Error = "Model yükleme Hatası";
+                    ViewBag.Error = "Model yükleme hatası!";
                     return View();
                 }
-
             }
             catch (Exception ex)
             {
-                ViewBag.Error = "Model yükleme Hatası " + ex.Message;
+                ViewBag.Error = ex.Message;
                 return View();
             }
         }
-
     }
 }

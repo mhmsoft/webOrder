@@ -1,13 +1,14 @@
-﻿@model IEnumerable<Dal.Context.Customer>
+﻿@model IEnumerable<Dal.Context.Employer>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h2>Çalışanlar</h2>
 
 <p>
-    @Html.ActionLink("Yeni Müşteri", "Create")
+    @Html.ActionLink("Yeni Çalışan", "Create")
 </p>
 <table class="table">
     <tr>
@@ -18,14 +19,12 @@
             @Html.DisplayNameFor(model => model.lastName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.address)
+            @Html.DisplayNameFor(model => model.hiredDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.City)
+            @Html.DisplayNameFor(model => model.salary)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AddressType)
-        </th>
+        <th>@Html.DisplayNameFor(model =>model.Department.departmentName)</th>
         <th></th>
     </tr>
 
@@ -38,19 +37,16 @@
             @Html.DisplayFor(modelItem => item.lastName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.address)
+            @Html.DisplayFor(modelItem => item.hiredDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.City)
+            @Html.DisplayFor(modelItem => item.salary) TL
         </td>
+        
         <td>
+            @Html.ActionLink("Düzenle", "Edit", new { id=item.employeeId}) |
            
-            @Html.DisplayFor(modelItem => item.AddressType)
-        </td>
-        <td>
-            @Html.ActionLink("Düzenle", "Edit", new {  id=item.customerId }) |
-            
-            @Html.ActionLink("sil", "Delete", new {  id=item.customerId})
+            @Html.ActionLink("Sil", "Delete", new {  id=item.employeeId })
         </td>
     </tr>
 }

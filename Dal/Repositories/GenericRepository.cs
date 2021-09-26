@@ -15,7 +15,7 @@ namespace Dal.Repositories
         {
             using (var db = new context())
             {
-                db.Set<T>().Remove(Get(Id));
+                db.Entry(Get(Id)).State = System.Data.Entity.EntityState.Deleted;
                 db.SaveChanges();
             }
         }

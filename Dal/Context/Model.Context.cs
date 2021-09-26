@@ -18,11 +18,14 @@ namespace Dal.Context
         public context()
             : base("name=denemeEntities")
         {
+            this.Configuration.LazyLoadingEnabled = true;
+           
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
+            
         }
     
         public virtual DbSet<Category> Category { get; set; }

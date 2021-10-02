@@ -10,7 +10,6 @@ namespace Dal.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T: class
     {
-       
         public void delete(int Id)
         {
             using (var db = new context())

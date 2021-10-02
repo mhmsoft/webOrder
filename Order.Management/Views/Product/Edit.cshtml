@@ -1,0 +1,127 @@
+﻿@model Dal.Context.Product
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+        {
+            @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4 style="color:#FC8213;">Ürün Düzenleme</h4>
+            <hr />
+            @Html.HiddenFor(model => model.productId)
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.Label("Kategori", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.categoryId, (IEnumerable<SelectListItem>)ViewBag.Categories, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.categoryId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Ürün Adı", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.productName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.productName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Stok Miktarı", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.stockQuantity, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.stockQuantity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Birim Fiyatı", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Satış için Uygun mu?", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @Html.EditorFor(model => model.isReadyForSale, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.isReadyForSale, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <!--For Show Exists Pictures-->
+            <div class="form-group">
+                @Html.Label("Resim/Resimler", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @if (ViewBag.Images != null)
+                    {
+                        foreach (var item in ViewBag.Images)
+                        {
+                            if (item != null)
+                            {
+                                <div id="@item.imageId" style="display:inline-block; margin:5px; border:1px solid #808080; padding:10px;">
+                                    <img style="width:90px;height:110px;" src="data:image/png;base64,@Convert.ToBase64String(@item.imgName)" />
+
+                                    <a style="display:block;" href="javascript:void(0);" class="Link_Sil" resim_id="@item.imageId">Sil</a>
+                                </div>
+                            }
+
+                        }
+                    }
+
+
+                </div>
+            </div>
+            <!-- Enf of For Show Exists Picture-->
+            <!--Image Upload -->
+            <div class="form-group">
+                @Html.Label("Resim", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" name="pics" id="pics" multiple />
+                </div>
+            </div>
+            <!--End Of Image Upload-->
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Düzenle" class="btn btn-warning" />
+                    @Html.ActionLink("Anasayfa", "Index", null, new { @class = "btn", @style = "background-color:#FC8213;color:white" })
+
+                </div>
+            </div>
+            <!--Error Messages-->
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @if (ViewBag.Error != null)
+                    {
+                        <p class="text-danger">@ViewBag.Error</p>
+                    }
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+         $(document).on('click', '.Link_Sil', function () {
+          var data = $(this).attr('resim_id');
+            $.ajax({
+            url:'@Url.Action("deleteImage","Product")',
+            data: { ImageId: data },
+            type: 'POST',
+            success: function (response) {
+                $('#' + data).remove();
+            }
+        });
+
+    });
+    });
+
+</script>

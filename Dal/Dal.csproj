@@ -51,49 +51,43 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\Category.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>Modelim.tt</DependentUpon>
     </Compile>
     <Compile Include="Context\Customer.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>Modelim.tt</DependentUpon>
     </Compile>
     <Compile Include="Context\Department.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>Modelim.tt</DependentUpon>
     </Compile>
     <Compile Include="Context\Employer.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>Modelim.tt</DependentUpon>
     </Compile>
-    <Compile Include="Context\Model.Context.cs">
+    <Compile Include="Context\images.cs">
+      <DependentUpon>Modelim.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Context\Modelim.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model.Context.tt</DependentUpon>
+      <DependentUpon>Modelim.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Context\Model.cs">
+    <Compile Include="Context\Modelim.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>Modelim.tt</DependentUpon>
     </Compile>
-    <Compile Include="Context\Model.Designer.cs">
+    <Compile Include="Context\Modelim.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model.edmx</DependentUpon>
+      <DependentUpon>Modelim.edmx</DependentUpon>
     </Compile>
     <Compile Include="Context\Order.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>Modelim.tt</DependentUpon>
     </Compile>
     <Compile Include="Context\OrderDetail.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>Modelim.tt</DependentUpon>
     </Compile>
     <Compile Include="Context\Product.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Context\sysdiagrams.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Context\YedekOrder.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Context\YedekOrderDetail.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>Modelim.tt</DependentUpon>
     </Compile>
     <Compile Include="Interface\ICategoryRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,19 +96,31 @@
     <Compile Include="Repositories\DepartmentRepository.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
+    <Compile Include="Repositories\ImageRepository.cs" />
     <Compile Include="Repositories\OrderDetailRepository.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Context\Modelim.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Modelim.edmx</DependentUpon>
+      <LastGenOutput>Modelim.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Context\Modelim.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Modelim.edmx</DependentUpon>
+      <LastGenOutput>Modelim.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <EntityDeploy Include="Context\Model.edmx">
+    <EntityDeploy Include="Context\Modelim.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+      <LastGenOutput>Modelim.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Context\Model.edmx.diagram">
-      <DependentUpon>Model.edmx</DependentUpon>
+    <None Include="Context\Modelim.edmx.diagram">
+      <DependentUpon>Modelim.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -126,18 +132,6 @@
       <Project>{b10a7961-46d4-4112-8e65-b26e2bd0e837}</Project>
       <Name>Abstract</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Context\Model.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model.edmx</DependentUpon>
-      <LastGenOutput>Model.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Context\Model.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model.edmx</DependentUpon>
-      <LastGenOutput>Model.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

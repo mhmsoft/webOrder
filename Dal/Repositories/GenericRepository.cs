@@ -2,6 +2,7 @@
 using Dal.Context;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,22 +20,50 @@ namespace Dal.Repositories
             }
         }
 
-        public T Get(int Id)
+        //public T Get(int Id)
+        //{
+        //    using (var db = new context())
+        //    {
+        //        return db.Set<T>().Find(Id);
+        //    }
+
+        //}
+        // 57      images
+        public T Get(int Id, string include = null)
         {
             using (var db = new context())
             {
-                return db.Set<T>().Find(Id);
+                var result = db.Set<T>().Find(Id);
+                if (!string.IsNullOrEmpty(include))
+                    db.Entry(result).Collection(include).Load();
+                return result;
+
+
             }
-            
+        }
+        
+        public IEnumerable<T> GetAll(string include = null)
+        {
+            using (var db = new context())
+            {
+                return string.IsNullOrEmpty(include)? db.Set<T>().ToList() : db.Set<T>().Include(include). ToList();
+            }
+
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string[] includes = null)
         {
+            
             using (var db = new context())
             {
-                return db.Set<T>().ToList();
+               
+                var query = db.Set<T>().AsNoTracking();
+                foreach (string item in includes)
+                {
+                    query = query.Include(item);
+                }
+                return query.ToList();
             }
-            
         }
 
         public void save(T model)

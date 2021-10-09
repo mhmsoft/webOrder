@@ -15,13 +15,13 @@
         <div class="form-horizontal">
             <h4 style="color:#FC8213;">Ürün Düzenleme</h4>
             <hr />
-            @Html.HiddenFor(model => model.productId)
+            @Html.HiddenFor(mode => mode.productId)
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
             <div class="form-group">
                 @Html.Label("Kategori", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.categoryId, (IEnumerable<SelectListItem>)ViewBag.Categories, null, new { @class = "form-control" })
+                    @Html.DropDownListFor(x => x.categoryId, (IEnumerable<SelectListItem>)ViewBag.Categories, null, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.categoryId, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -59,14 +59,14 @@
             <div class="form-group">
                 @Html.Label("Resim/Resimler", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @if (ViewBag.Images != null)
+                    @if (Model.images != null)
                     {
-                        foreach (var item in ViewBag.Images)
+                        foreach (var item in Model.images)
                         {
                             if (item != null)
                             {
                                 <div id="@item.imageId" style="display:inline-block; margin:5px; border:1px solid #808080; padding:10px;">
-                                    <img style="width:90px;height:110px;" src="data:image/png;base64,@Convert.ToBase64String(@item.imgName)" />
+                                    <img style="width:110px;height:110px;" src="data:image/png;base64,@Convert.ToBase64String(@item.imgName)" />
 
                                     <a style="display:block;" href="javascript:void(0);" class="Link_Sil" resim_id="@item.imageId">Sil</a>
                                 </div>

@@ -24,6 +24,7 @@ namespace Dal.Context
         public Nullable<int> empId { get; set; }
         public Nullable<int> customerId { get; set; }
         public int orderId { get; set; }
+        public Nullable<bool> isConfirmed1 { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Employer Employer { get; set; }

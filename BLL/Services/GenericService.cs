@@ -22,15 +22,16 @@ namespace BLL.Services
         {
             repo.delete(Id);
         }
-
-        public T Get(int Id)
+                    //57 , images
+        public T Get(int Id,string include=null)
         {
-            return repo.Get(Id);
+            return repo.Get(Id,include);
         }
+       
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string includes = null)
         {
-            return repo.GetAll();
+            return repo.GetAll(includes);
         }
 
         public void Update(T model)

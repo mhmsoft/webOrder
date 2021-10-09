@@ -11,7 +11,9 @@ namespace Abstract
         void Add(T model);
         void Delete(int Id);
         void Update(T model);
-        IEnumerable<T> GetAll();
-        T Get(int Id);
+       
+       
+        IEnumerable<T> GetAll(string includes = null);
+        T Get(int Id,string include=null);
     }
 }

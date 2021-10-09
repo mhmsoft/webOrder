@@ -42,7 +42,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.salary) TL
         </td>
-        
+        <td>
+            @Html.DisplayFor(modelItem => item.Department.departmentName)
+        </td>
         <td>
             @Html.ActionLink("Düzenle", "Edit", new { id=item.employeeId}) |
            

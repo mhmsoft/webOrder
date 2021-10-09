@@ -13,7 +13,7 @@ namespace Order.Management.Controllers
         // GET: Employee
         public ActionResult Index()
         {
-            return View(EmployeeService.getInstance().GetAll()) ;
+            return View(EmployeeService.getInstance().GetAll("Department")) ;
         }
         public ActionResult Create()
         {

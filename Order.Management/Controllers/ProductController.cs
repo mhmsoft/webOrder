@@ -14,6 +14,7 @@ namespace Order.Management.Controllers
         // GET: Product
         public ActionResult Index()
         {
+
             return View(ProductService.getInstance().GetAll());
         }
         public ActionResult Create()
@@ -61,15 +62,17 @@ namespace Order.Management.Controllers
             }
             
             
-        }
+        } 
+        // Product/Edit/57
         public ActionResult Edit(int Id)
         {
             // Edit view içerisinde Categori dropdown listesinin içeriğini doldurmak ve selected value ayarlıyoruz
             ViewBag.Categories = new SelectList(CategoryService.getInstance().GetAll(), "categoryId", "categoryName", ProductService.getInstance().Get(Id).categoryId);
-           // ilgili ürüne ait resimleri view'e göndermek için.
-            ViewBag.Images = ImageService.getInstance().GetAll().Where(x => x.productId == Id).ToList();
 
-            return View(ProductService.getInstance().Get(Id));
+            // ilgili ürüne ait resimleri view'e göndermek için.
+            // ViewBag.Images = ImageService.getInstance().GetAll().Where(x => x.productId == Id).ToList();
+
+            return View(ProductService.getInstance().Get(Id,"images"));
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Dal.Context.Order>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Siparişler</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Sipariş No")
+        </th>
+        <th>
+            @Html.DisplayName("Sipariş Tarihi")
+        </th>
+        <th>
+            @Html.DisplayName("Müşteri Ad")
+        </th>
+        <th>
+            @Html.DisplayName("Müşteri Soyad")
+        </th>
+        <th>
+            
+            @Html.DisplayName("Adres")
+        </th>
+        <th>
+        @Html.DisplayName("Şehir")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.orderId)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.orderDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Customer.firstName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Customer.lastName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Customer.address)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Customer.City)
+    </td>
+    <td>
+
+        @if (item.isConfirmed1 == false)
+        {
+
+            @Html.ActionLink("Onayla", "Comfirm", new { id = item.orderId }, new { @class = "btn btn-warning" })
+        }
+
+    </td>
+    <td>
+
+
+        @Html.ActionLink("Detay", "Detail", new { id = item.orderId }, new { @class = "btn btn-success" }) |
+        @Html.ActionLink("Sil/iade", "Delete", new { id = item.orderId }, new { @class = "btn btn-danger" })
+    </td>
+</tr>
+}
+
+</table>

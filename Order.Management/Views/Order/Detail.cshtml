@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Dal.Context.OrderDetail>
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detail</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <table class="table">
+            <tr>
+                <th>@Html.DisplayName("Ürün Adı")</th>
+                <th>@Html.DisplayName("Ürün Fiyatı")</th>
+                <th>@Html.DisplayName("Adet")</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.Product.productName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Product.UnitPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.quantity)
+                    </td>
+                </tr>
+            }
+            <hr />
+            <tr>
+                <td></td>
+                <td class="text-danger">@string.Format("{0:C}", Model.Sum(model => model.quantity * model.Product.UnitPrice))</td>
+                <td></td>
+            </tr>
+        </table>
+        @Html.ActionLink("Anasayfa", "Index", null, new { @class = "btn", @style = "background-color:#FC8213;color:white" })
+
+    </div>
+</div>
+

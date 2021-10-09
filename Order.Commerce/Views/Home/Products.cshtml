@@ -1,0 +1,85 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<Dal.Context.Product>
+@{
+    ViewBag.Title = "Products";
+}
+@Html.Partial("_PartialModalShoppingBox")
+<hr class="offset-lg">
+<div class="container tags">
+    <div class="btn-group pull-right">
+        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="ion-arrow-down-b"></i> Sırala
+        </button>
+        <ul class="dropdown-menu">
+            <li class="active"><a href="@Url.Action("Products", new {orderBy=1 })"> <i class="ion-arrow-down-c"></i> İsim [A-Z]</a></li>
+            <li><a href="@Url.Action("Products", new {orderBy=2 })"> <i class="ion-arrow-up-c"></i> İsim [Z-A]</a></li>
+            <li><a href="@Url.Action("Products", new {orderBy=3 })"> <i class="ion-arrow-down-c"></i> Fiyat [Düşük-Yüksek]</a></li>
+            <li><a href="@Url.Action("Products", new {orderBy=4 })"> <i class="ion-arrow-up-c"></i> Fiyat [Yüksek-Düşük]</a></li>
+        </ul>
+    </div>
+    @if (ViewBag.Categories!=null)
+    {
+        <p>Ürün Kategorileri</p>
+        <div class="btn-group">
+            <label class="btn btn-default btn-xs active">
+                <a href="@Url.Action("Products")">
+                Tüm Kategoriler</a>
+            </label>
+            @foreach (var category in ViewBag.Categories)
+            {
+        <label class="btn btn-default btn-xs">
+            <a href="@Url.Action("Products",new { catId=category.categoryId})">@category.categoryName</a>
+        </label>
+            }
+
+
+        </div>
+    }
+
+</div>
+<div class="container">
+    <div class="row">
+        @Html.Partial("_PartialProductFilters")
+        <!-- Products -->
+        <div class="col-sm-9 products">
+            <div class="row">
+                @foreach (var product in Model)
+                {
+                <div class="col-sm-6 col-md-4 product">
+                    <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a>
+                    @if (product.images.Count>0)
+                    {
+                        <a href="~/Home/ProductDetail/@product.productId"><img src="data:image/png;base64,@Convert.ToBase64String(product.images.FirstOrDefault().imgName)" alt="@product.productName" /></a>
+
+                    }
+
+                    <div class="content">
+                        <h1 class="h4">@product.productName</h1>
+                        <p class="price">@string.Format("{0:C}", product.UnitPrice)</p>
+                        <label>@product.Category.categoryName</label>
+
+                        <a href="~/Home/ProductDetail/@product.productId" class="btn btn-link"> Detay</a>
+                        <button class="btn btn-primary btn-rounded btn-sm"> <i class="ion-bag"></i> Sepete Ekle</button>
+                    </div>
+                </div>
+                }
+
+            </div>
+
+            <nav>
+                <ul class="pagination">
+                @Html.PagedListPager(Model, page => Url.Action("Products", new
+                {
+                    page,
+                    catId = ViewBag.catId,
+                    orderBy = ViewBag.orderBy
+
+                 }))
+                </ul>
+            </nav>
+        </div>
+        <!-- //End Of Products/ -->
+    </div>
+</div>
+<br>
+<br>

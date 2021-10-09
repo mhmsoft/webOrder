@@ -11,6 +11,7 @@
           </Key>
           <Property Name="categoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="categoryName" Type="varchar" MaxLength="40" />
+          <Property Name="imageName" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -233,6 +234,7 @@
           <Property Name="categoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="categoryName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Product" Relationship="Self.fk_ProToCat" FromRole="Category" ToRole="Product" />
+          <Property Name="imageName" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -468,6 +470,7 @@
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="denemeModel.Category">
               <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="imageName" ColumnName="imageName" />
                 <ScalarProperty Name="categoryId" ColumnName="categoryId" />
                 <ScalarProperty Name="categoryName" ColumnName="categoryName" />
               </MappingFragment>

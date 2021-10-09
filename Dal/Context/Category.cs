@@ -22,6 +22,7 @@ namespace Dal.Context
     
         public int categoryId { get; set; }
         public string categoryName { get; set; }
+        public byte[] imageName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Product { get; set; }

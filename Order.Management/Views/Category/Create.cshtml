@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        @using (Html.BeginForm())
+        @using (Html.BeginForm("Create", "Category", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
 
@@ -23,7 +23,14 @@
                     @Html.ValidationMessageFor(model => model.categoryName, "", new { @class = "text-danger" })
                 </div>
             </div>
-
+            <!--Image Upload -->
+            <div class="form-group">
+                @Html.Label("Resim", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" name="pics" id="pics"  />
+                </div>
+            </div>
+            <!--End Of Image Upload-->
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Kaydet" class="btn btn-success" />

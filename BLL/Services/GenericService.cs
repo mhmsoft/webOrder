@@ -34,6 +34,11 @@ namespace BLL.Services
             return repo.GetAll(includes);
         }
 
+        public IEnumerable<T> GetAllArray(string[] includes = null)
+        {
+            return repo.GetAll(includes);
+        }
+
         public void Update(T model)
         {
             repo.update(model);

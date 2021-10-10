@@ -24,6 +24,7 @@ namespace Order.Management.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult Create(Product model,IEnumerable<HttpPostedFileBase> pics)
         {
             try
@@ -76,6 +77,7 @@ namespace Order.Management.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult Edit(Product model,IEnumerable<HttpPostedFileBase> pics)
         {
             try

@@ -27,6 +27,7 @@ namespace Dal.Context
         public Nullable<int> stockQuantity { get; set; }
         public Nullable<int> categoryId { get; set; }
         public Nullable<bool> isReadyForSale { get; set; }
+        public string description { get; set; }
     
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        @using (Html.BeginForm("Create","Product",FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
 
@@ -54,6 +54,7 @@
                     @Html.ValidationMessageFor(model => model.isReadyForSale, "", new { @class = "text-danger" })
                 </div>
             </div>
+
             <!--Image Upload -->
             <div class="form-group">
                 @Html.Label("Resim", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -62,9 +63,17 @@
                 </div>
             </div>
             <!--End Of Image Upload-->
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                </div>
+            </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Kaydet" class="btn btn-danger" />
+                    <input type="submit" value="Kaydet" class="btn btn-success" />
                     @Html.ActionLink("Anasayfa", "Index", null, new { @class = "btn", @style = "background-color:#FC8213;color:white" })
 
                 </div>
@@ -81,6 +90,11 @@
         }
     </div>
 </div>
+<script src="~/Content/ckeditor/ckeditor.js"></script>
+
+<script type="text/javascript">
+    CKEDITOR.replace('description');
+</script>
 
 
 

@@ -80,6 +80,7 @@
           <Property Name="stockQuantity" Type="int" />
           <Property Name="categoryId" Type="int" />
           <Property Name="isReadyForSale" Type="bit" />
+          <Property Name="description" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="fk_EmpToDept">
           <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
@@ -318,6 +319,7 @@
           <NavigationProperty Name="Category" Relationship="Self.fk_ProToCat" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="images" Relationship="Self.fkImagesToProducts" FromRole="Product" ToRole="images" />
           <NavigationProperty Name="OrderDetail" Relationship="Self.fk_OrderDetToProd" FromRole="Product" ToRole="OrderDetail" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="fk_ProToCat">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
@@ -542,6 +544,7 @@
           <EntitySetMapping Name="Product">
             <EntityTypeMapping TypeName="denemeModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="productId" ColumnName="productId" />
                 <ScalarProperty Name="productName" ColumnName="productName" />
                 <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />

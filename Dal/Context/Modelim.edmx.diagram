@@ -21,6 +21,8 @@
         <AssociationConnector Association="denemeModel.fkImagesToProducts" ManuallyRouted="false" />
         <AssociationConnector Association="denemeModel.fk_OrderToOrderDetail" ManuallyRouted="false" />
         <AssociationConnector Association="denemeModel.fk_OrderDetToProd" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="denemeModel.Comment" Width="1.5" PointX="7.5" PointY="12.625" />
+        <AssociationConnector Association="denemeModel.fk_commentToProduct" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -19,6 +19,7 @@ namespace Dal.Context
         {
             this.images = new HashSet<images>();
             this.OrderDetail = new HashSet<OrderDetail>();
+            this.Comment = new HashSet<Comment>();
         }
     
         public int productId { get; set; }
@@ -34,5 +35,7 @@ namespace Dal.Context
         public virtual ICollection<images> images { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comment { get; set; }
     }
 }

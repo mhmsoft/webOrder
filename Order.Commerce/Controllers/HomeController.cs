@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using BLL.Services;
 using PagedList;
-
+using Order.Commerce.Models.ViewModels;
 namespace Order.Commerce.Controllers
 {
     public class HomeController : Controller
@@ -59,6 +59,35 @@ namespace Order.Commerce.Controllers
             }
             return View(products.ToPagedList(_page, _pageSize));
         }
+        // detail
+        public ActionResult ProductDetail(int Id)
+        {
+            int? categoryId = ProductService.getInstance().Get(Id).categoryId;
+            VmProductWithComment model = new VmProductWithComment()
+            {
+                Product = ProductService.getInstance().Get(Id, "images"),
+                Comments = CommentService.getInstance().GetAll().Where(x => x.productId == Id).ToList(),
+                productsByCategory = ProductService.getInstance().GetAllArray(new string[] { "Category","images"}).Where(x => x.categoryId == categoryId).ToList()
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult AddComment(int productId, string name,string email,string comment)
+        {
+
+            CommentService.getInstance().Add(new Dal.Context.Comment()
+            {
+                productId=productId,
+                description=comment,
+                email=email,
+                Name=name,
+                
+            });
+
+           return  RedirectToAction("ProductDetail",new { Id= productId});
+            
+        }
+
 
         
     }

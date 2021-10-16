@@ -13,6 +13,16 @@
           <Property Name="categoryName" Type="varchar" MaxLength="40" />
           <Property Name="imageName" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="commentId" />
+          </Key>
+          <Property Name="commentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar(max)" />
+          <Property Name="productId" Type="int" />
+        </EntityType>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="customerId" />
@@ -82,6 +92,20 @@
           <Property Name="isReadyForSale" Type="bit" />
           <Property Name="description" Type="nvarchar(max)" />
         </EntityType>
+        <Association Name="fk_commentToProduct">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="productId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_EmpToDept">
           <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
           <End Role="Employer" Type="Self.Employer" Multiplicity="*" />
@@ -184,6 +208,7 @@
         </Association>
         <EntityContainer Name="denemeModelStoreContainer">
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employer" EntityType="Self.Employer" Schema="dbo" store:Type="Tables" />
@@ -191,6 +216,10 @@
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_commentToProduct" Association="Self.fk_commentToProduct">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
           <AssociationSet Name="fk_EmpToDept" Association="Self.fk_EmpToDept">
             <End Role="Department" EntitySet="Department" />
             <End Role="Employer" EntitySet="Employer" />
@@ -320,6 +349,7 @@
           <NavigationProperty Name="images" Relationship="Self.fkImagesToProducts" FromRole="Product" ToRole="images" />
           <NavigationProperty Name="OrderDetail" Relationship="Self.fk_OrderDetToProd" FromRole="Product" ToRole="OrderDetail" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Comment" Relationship="denemeModel.fk_commentToProduct" FromRole="Product" ToRole="Comment" />
         </EntityType>
         <Association Name="fk_ProToCat">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
@@ -462,7 +492,37 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="OrderDetail" EntitySet="OrderDetail" />
           </AssociationSet>
+          <EntitySet Name="Comment" EntityType="denemeModel.Comment" />
+          <AssociationSet Name="fk_commentToProduct" Association="denemeModel.fk_commentToProduct">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="commentId" />
+          </Key>
+          <Property Name="commentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="productId" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="denemeModel.fk_commentToProduct" FromRole="Comment" ToRole="Product" />
+        </EntityType>
+        <Association Name="fk_commentToProduct">
+          <End Type="denemeModel.Product" Role="Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="denemeModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="productId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -551,6 +611,17 @@
                 <ScalarProperty Name="stockQuantity" ColumnName="stockQuantity" />
                 <ScalarProperty Name="categoryId" ColumnName="categoryId" />
                 <ScalarProperty Name="isReadyForSale" ColumnName="isReadyForSale" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comment">
+            <EntityTypeMapping TypeName="denemeModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="commentId" ColumnName="commentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

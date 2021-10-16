@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Dal.Context.Product>
+
+<section class="products">
+    <div class="container">
+        <h1 class="h3">Benzer Ürünler</h1>
+
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                <div class="col-sm-6 col-md-3 product">
+                    <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a>
+                    <a href="@Url.Action("ProductDetail",new {Id=product.productId })"><img src="data:image/png;base64,@Convert.ToBase64String(product.images.FirstOrDefault().imgName)" alt="@product.productName" /></a>
+
+                    <div class="content">
+                        <h1 class="h4">@product.productName</h1>
+                        <p class="price">@string.Format("{0:C}",product.UnitPrice)</p>
+                        <label>@product.Category.categoryName</label>
+
+                        <a href="@Url.Action("ProductDetail",new {Id=product.productId })" class="btn btn-link"> Detay</a>
+                        <button class="btn btn-primary btn-rounded btn-sm"> <i class="ion-bag"></i> Sepete Ekle</button>
+                    </div>
+                </div>
+            }
+
+
+
+        </div>
+    </div>
+</section>

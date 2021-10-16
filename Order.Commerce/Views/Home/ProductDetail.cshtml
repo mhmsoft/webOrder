@@ -1,0 +1,79 @@
+﻿@model  Order.Commerce.Models.ViewModels.VmProductWithComment
+
+
+<hr class="offset-lg">
+
+<div class="product">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-7 col-md-7">
+                <div class="carousel product" data-count="5" data-current="1">
+                    <!-- <button class="btn btn-control"></button> -->
+
+                    <div class="items">
+                        @{int i = 0;}
+                        @foreach (var image in Model.Product.images)
+                        {
+                            i++;
+                            var active = i == 1 ? "active" : "";
+                            <div class="item @active" data-marker="@i">
+                                <img src="data:image/png;base64,@Convert.ToBase64String(image.imgName)" alt="@Model.Product.productName" />
+                            </div>
+                        }
+                        
+                    </div>
+
+                    <ul class="markers">
+                        @{i = 0;}
+                        @foreach (var image in Model.Product.images)
+                        {
+                            i++;
+                            var active = i == 1 ? "active" : "";
+                            <li data-marker="@i" class="@active"><img src="data:image/png;base64,@Convert.ToBase64String(image.imgName)" alt="@Model.Product.productName"  /></li>
+                        }
+                       
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-5 col-md-5">
+
+                <h1>@Model.Product.productName</h1>
+
+                <p> &middot; Chrome OS™</p>
+                <p> &middot; Intel® Celeron® processor</p>
+                <p> &middot; Intel HD Graphics</p>
+
+                <p class="price">@string.Format("{0:C}",Model.Product.UnitPrice)</p>
+                <p class="price through">@string.Format("{0:C}", Model.Product.UnitPrice*1.10m)</p>
+                <br><br>
+
+                <button class="btn btn-primary btn-rounded"> <i class="ion-bag"></i> Sepete Ekle</button>
+            </div>
+        </div>
+        <br><br><br>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h1>@Model.Product.productName</h1>
+                        <br>
+                        @Html.Raw(Model.Product.description)
+                    </div>
+                    @Html.Partial("_PartialComments", Model.Comments)
+
+                </div>
+    </div>
+</div>
+<br>
+<br>
+@Html.Partial("_PartialRelationProducts",Model.productsByCategory)
+
+<br>
+<br>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        $(document).ready(function () {
+            $("#productId").val(@Model.Product.productId);
+        });
+    });
+</script>

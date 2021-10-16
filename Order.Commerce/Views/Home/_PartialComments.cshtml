@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Dal.Context.Comment>
+
+<div class="col-sm-5">
+    <div class="comments">
+        <h2 class="h3">Ürün Yorumları</h2>
+        <br>
+        <div class="wrapper">
+            <div class="content">
+                @foreach (var item in Model)
+                {
+                        <h3>@item.Name</h3>
+                        <label>@item.email</label>
+                        <p>
+                            @item.description
+                        </p>
+                }
+
+            </div>
+        </div>
+        <br>
+
+        <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#Modal-Comment"> <i class="ion-chatbox-working"></i> Add comment </button>
+    </div>
+    <br><br>
+
+  
+</div>

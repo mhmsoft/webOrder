@@ -17,7 +17,7 @@ namespace Order.Commerce.Controllers
         public ActionResult Products(int? catId,int? page, int? orderBy)
         {
             int _page = page ?? 1;
-            int _pageSize =  2;
+            int _pageSize =  3; // her sayfadaki ürün sayısı
             
             //Tüm kategorileri view'e gönder
             ViewBag.Categories = CategoryService.getInstance().GetAll();

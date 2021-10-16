@@ -23,6 +23,9 @@
         <AssociationConnector Association="denemeModel.fk_OrderDetToProd" ManuallyRouted="false" />
         <EntityTypeShape EntityType="denemeModel.Comment" Width="1.5" PointX="7.5" PointY="12.625" />
         <AssociationConnector Association="denemeModel.fk_commentToProduct" />
+        <EntityTypeShape EntityType="denemeModel.roles" Width="1.5" PointX="10.375" PointY="2.75" />
+        <EntityTypeShape EntityType="denemeModel.users" Width="1.5" PointX="12.625" PointY="1.125" />
+        <AssociationConnector Association="denemeModel.FK_dbo_users_dbo_roles_roleId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

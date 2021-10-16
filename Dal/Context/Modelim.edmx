@@ -92,6 +92,38 @@
           <Property Name="isReadyForSale" Type="bit" />
           <Property Name="description" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="roleId" />
+          </Key>
+          <Property Name="roleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="roleName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar(max)" />
+          <Property Name="lastName" Type="nvarchar(max)" />
+          <Property Name="email" Type="nvarchar(max)" />
+          <Property Name="password" Type="nvarchar(max)" />
+          <Property Name="rePassword" Type="nvarchar(max)" />
+          <Property Name="phone" Type="nvarchar(max)" />
+          <Property Name="address" Type="nvarchar(max)" />
+          <Property Name="activationCode" Type="nvarchar(max)" />
+          <Property Name="resetCode" Type="nvarchar(max)" />
+          <Property Name="hostName" Type="nvarchar(max)" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="loginAttempt" Type="int" />
+          <Property Name="createdDate" Type="datetime" />
+          <Property Name="loginTime" Type="datetime" />
+          <Property Name="isMailVerified" Type="bit" />
+          <Property Name="roleId" Type="int" />
+          <Property Name="city" Type="nvarchar(max)" />
+          <Property Name="subscribe" Type="bit" />
+          <Property Name="postCode" Type="int" />
+        </EntityType>
         <Association Name="fk_commentToProduct">
           <End Role="Product" Type="Self.Product" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -103,6 +135,18 @@
             </Principal>
             <Dependent Role="Comment">
               <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_users_dbo_roles_roleId">
+          <End Role="roles" Type="Self.roles" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="roleId" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="roleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -216,9 +260,15 @@
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="fk_commentToProduct" Association="Self.fk_commentToProduct">
             <End Role="Product" EntitySet="Product" />
             <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_users_dbo_roles_roleId" Association="Self.FK_dbo_users_dbo_roles_roleId">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="users" EntitySet="users" />
           </AssociationSet>
           <AssociationSet Name="fk_EmpToDept" Association="Self.fk_EmpToDept">
             <End Role="Department" EntitySet="Department" />
@@ -497,6 +547,12 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
+          <EntitySet Name="roles" EntityType="denemeModel.roles" />
+          <EntitySet Name="users" EntityType="denemeModel.users" />
+          <AssociationSet Name="FK_dbo_users_dbo_roles_roleId" Association="denemeModel.FK_dbo_users_dbo_roles_roleId">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Comment">
           <Key>
@@ -520,6 +576,52 @@
             </Principal>
             <Dependent Role="Comment">
               <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="roleId" />
+          </Key>
+          <Property Name="roleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="roleName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="users" Relationship="denemeModel.FK_dbo_users_dbo_roles_roleId" FromRole="roles" ToRole="users" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="rePassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="activationCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="resetCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="hostName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="loginAttempt" Type="Int32" />
+          <Property Name="createdDate" Type="DateTime" Precision="3" />
+          <Property Name="loginTime" Type="DateTime" Precision="3" />
+          <Property Name="isMailVerified" Type="Boolean" />
+          <Property Name="roleId" Type="Int32" />
+          <Property Name="city" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="subscribe" Type="Boolean" />
+          <Property Name="postCode" Type="Int32" />
+          <NavigationProperty Name="roles" Relationship="denemeModel.FK_dbo_users_dbo_roles_roleId" FromRole="users" ToRole="roles" />
+        </EntityType>
+        <Association Name="FK_dbo_users_dbo_roles_roleId">
+          <End Type="denemeModel.roles" Role="roles" Multiplicity="0..1" />
+          <End Type="denemeModel.users" Role="users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="roleId" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="roleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -622,6 +724,40 @@
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="commentId" ColumnName="commentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="denemeModel.roles">
+              <MappingFragment StoreEntitySet="roles">
+                <ScalarProperty Name="roleName" ColumnName="roleName" />
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="denemeModel.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="postCode" ColumnName="postCode" />
+                <ScalarProperty Name="subscribe" ColumnName="subscribe" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
+                <ScalarProperty Name="isMailVerified" ColumnName="isMailVerified" />
+                <ScalarProperty Name="loginTime" ColumnName="loginTime" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="loginAttempt" ColumnName="loginAttempt" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="hostName" ColumnName="hostName" />
+                <ScalarProperty Name="resetCode" ColumnName="resetCode" />
+                <ScalarProperty Name="activationCode" ColumnName="activationCode" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="rePassword" ColumnName="rePassword" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

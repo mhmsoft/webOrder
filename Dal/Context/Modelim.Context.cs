@@ -13,7 +13,7 @@ namespace Dal.Context
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class context : DbContext
+    public partial class  context : DbContext
     {
         public context()
             : base("name=Entities")
@@ -34,5 +34,7 @@ namespace Dal.Context
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
+        public virtual DbSet<roles> roles { get; set; }
+        public virtual DbSet<users> users { get; set; }
     }
 }

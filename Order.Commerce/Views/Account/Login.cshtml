@@ -1,0 +1,72 @@
+﻿@model Order.Commerce.Models.ViewModels.Account.VmLogin
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<hr class="offset-lg hidden-xs">
+<hr class="offset-md">
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4 md-padding">
+            <h1 class="align-center">Returning Customer</h1>
+            <br>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <input type="hidden" name="ReturnUrl" value="@Request.QueryString["ReturnUrl"]" />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "E-posta" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Şifre" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class=" col-md-10">
+                    <input type="submit" value="Giriş" class="btn btn-default" />
+                    <a href="@Url.Action("ForgetPassword")" class="xs-margin">Şifremi Unuttum ></a>
+                    <br><br>
+                    <a href="#facebook" class="btn btn-facebook"> <i class="ion-social-facebook"></i> Login with Facebook </a>
+                    <hr class="offset-sm">
+
+                    <p>
+                        Kayıtlı değil misin? <a href="@Url.Action("Register")"> Kayıt ol  </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+            }
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @if (ViewBag.Message != null)
+                {
+                    <p class="alert">@ViewBag.Message</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br class="hidden-xs">
+<br class="hidden-xs">
+
+
+
+
+
+
+

@@ -133,10 +133,16 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mail\sendMail.cs" />
+    <Compile Include="Models\ViewModels\Account\VmForgetPassword.cs" />
+    <Compile Include="Models\ViewModels\Account\VmResetPassword.cs" />
+    <Compile Include="Models\ViewModels\Account\VmLogin.cs" />
+    <Compile Include="Models\ViewModels\Account\VmRegister.cs" />
     <Compile Include="Models\ViewModels\VmProductWithComment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1914,6 +1920,11 @@
     <Content Include="Views\Home\_PartialComments.cshtml" />
     <Content Include="Views\Home\_PartialRelationProducts.cshtml" />
     <Content Include="Views\Home\ProductDetail.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ForgetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\MyOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
